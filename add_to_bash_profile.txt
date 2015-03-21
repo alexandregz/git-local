@@ -1,0 +1,34 @@
+# git-local (from gh/IonicaBizau/git-stats)
+# Override the Git command
+git() {
+  cmd=$1
+  shift
+  extra=""
+
+  quoted_args=""
+  whitespace="[[:space:]]"
+  for i in "$@"
+  do
+      quoted_args="$quoted_args \"$i\""
+  done
+
+  cmdToRun="`which git` "$cmd" $quoted_args"
+  cmdToRun=`echo $cmdToRun | sed -e 's/^ *//' -e 's/ *$//'`
+  bash -c "$cmdToRun"
+  if [ $? -eq 0 ]; then
+    # clone command
+    if [ "$cmd" == "clone" ]; then
+      if [ ! -f ~/.git-local.db ]; then
+          sqlite3 ~/.git-local.db "create table repos (id INTEGER PRIMARY KEY, path TEXT, repo TEXT, date TEXT);"
+      else
+          sqlite3 ~/.git-local.db "select * from repos" &> /dev/null
+          if [ $? -ne 0 ]; then
+              sqlite3 ~/.git-local.db "create table repos (id INTEGER PRIMARY KEY, path TEXT, repo TEXT, date TEXT);"
+          fi
+      fi
+
+      # remove first char, because is always one space
+      sqlite3 ~/.git-local.db "insert into repos (path, repo, date) values ('"$(pwd)"', '${quoted_args#?}', CURRENT_TIMESTAMP);"
+    fi
+  fi
+}
