@@ -18,17 +18,7 @@ git() {
   if [ $? -eq 0 ]; then
     # clone command
     if [ "$cmd" == "clone" ]; then
-      if [ ! -f ~/.git-local.db ]; then
-          sqlite3 ~/.git-local.db "create table repos (id INTEGER PRIMARY KEY, path TEXT, repo TEXT, date TEXT);"
-      else
-          sqlite3 ~/.git-local.db "select * from repos" &> /dev/null
-          if [ $? -ne 0 ]; then
-              sqlite3 ~/.git-local.db "create table repos (id INTEGER PRIMARY KEY, path TEXT, repo TEXT, date TEXT);"
-          fi
-      fi
-
-      # remove first char, because is always one space
-      sqlite3 ~/.git-local.db "insert into repos (path, repo, date) values ('"$(pwd)"', '${quoted_args#?}', CURRENT_TIMESTAMP);"
+      echo "$(pwd)|${quoted_args#?}|$(date)" >> ~/.git-local.data
     fi
   fi
 }

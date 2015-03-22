@@ -1,4 +1,4 @@
 #!/bin/sh
 # Shows local repos created with git-clone
 #
-sqlite3 ~/.git-local.db "select * from repos"
+cat ~/.git-local.data
