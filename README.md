@@ -11,9 +11,7 @@ bash
 
 # Usage
 ```bash
-alex@vostok:/Volumes/HD/dev$ git local
-1|/tmp|"https://github.com/alexandregz/dotfiles" "test2"|2015-03-20 02:19:19
-2|/tmp|"https://github.com/alexandregz/dotfiles"|2015-03-20 02:19:23
-3|/tmp|"https://github.com/alexandregz/twofactor_gauthenticator"|2015-03-20 02:19:36
-4|/Volumes/HD/dev|"https://github.com/alexandregz/git-local"|2015-03-21 10:25:03
+alex@vostok:/Volumes/HD/dev/git-local(master)$ git local
+/Volumes/HD/dev|"https://github.com/alexandregz/git-local"|Mon Mar 23 00:03:49 CET 2015
+/tmp|"https://github.com/alexandregz/git-local" "test3"|Mon Mar 23 00:04:17 CET 2015
 ```
